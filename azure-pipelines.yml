@@ -15,6 +15,7 @@ variables:
   helmChartPath: 'charts/compose-integration'
   pool: 'Local-Windows-Agent'
   namespace: 'compose'
+  system.debug: true
 
 stages:
   - stage: Build
@@ -24,10 +25,14 @@ stages:
         displayName: Build
         pool: $(pool)
         steps:
-          # Increase Git buffer size to prevent RPC errors
+          # Increase Git buffer size
           - script: |
-              git config --global http.postBuffer 524288000
+              git config --global http.postBuffer 1048576000
             displayName: Increase Git buffer size
+
+          # Perform shallow fetch
+          - checkout: self
+            fetchDepth: 1
 
           # Set Java version
           - script: |
