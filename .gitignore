@@ -55,3 +55,6 @@ build
 !gradle/wrapper/gradle-wrapper.properties
 !gradlew
 !gradlew.bat
+
+
+charts/compose-integration/*.*
