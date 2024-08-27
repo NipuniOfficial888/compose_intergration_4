@@ -1,0 +1,18 @@
+namespace: compose-backend
+
+service:
+  port: 8080
+  targetPort: 8080
+
+image:
+  repository: composeglowqa.azurecr.io/compose-integration
+  tag: ""
+
+env:
+  AZURE_KEYVAULT_URI: "https://cg-qa-integration.vault.azure.net/"
+  AZURE_KEYVAULT_TENANT_ID: "0707a631-f38c-4306-a7b8-1688bf331058"
+  AZURE_KEYVAULT_CLIENT_ID: "6db07f11-4258-421e-b064-898ea105b884"
+  AZURE_KEYVAULT_CLIENT_SECRET: "FT88Q~NfV5Nupa9f1dJ~9l8Sbye1g11EXuY05aQF" #Iq68Q~KbfyYbIlcFOK~B8ia1ZD-0KhQwb366pazf
+  APM_ENABLE: "false"
+  NEW_RELIC_APP_NAME: "compose-integration-qa"
+  NEW_RELIC_LICENSE_KEY: "your-new-relic-license-key"

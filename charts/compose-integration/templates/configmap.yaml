@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: compose-integration-config
+  namespace: {{ .Values.namespace }}
+data:
+  # Add configuration data here if needed

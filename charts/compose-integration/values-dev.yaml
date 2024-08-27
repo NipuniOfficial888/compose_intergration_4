@@ -1,0 +1,18 @@
+namespace: compose-backend
+
+service:
+  port: 8080
+  targetPort: 8080
+
+image:
+  repository: composeregistry.azurecr.io/compose-integration
+  tag: ""
+
+env:
+  AZURE_KEYVAULT_URI: "https://cg-dev-integration.vault.azure.net/"
+  AZURE_KEYVAULT_TENANT_ID: "0707a631-f38c-4306-a7b8-1688bf331058"
+  AZURE_KEYVAULT_CLIENT_ID: "cf61aea4-b272-41a1-98ce-125f764ad0cf"
+  AZURE_KEYVAULT_CLIENT_SECRET: "uir8Q~Hy_fxJd85X7YuaE8VdlOZPfwOmeqTzVda." #Iq68Q~KbfyYbIlcFOK~B8ia1ZD-0KhQwb366pazf
+  APM_ENABLE: "false"
+  NEW_RELIC_APP_NAME: "compose-integration-dev"
+  NEW_RELIC_LICENSE_KEY: "your-new-relic-license-key"

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: compose-integration
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: compose-integration
+  template:
+    metadata:
+      labels:
+        app: compose-integration
+    spec:
+      containers:
+        - name: compose-integration
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: AZURE_KEYVAULT_URI
+              value: "{{ .Values.env.AZURE_KEYVAULT_URI }}"
+            - name: AZURE_KEYVAULT_TENANT_ID
+              value: "{{ .Values.env.AZURE_KEYVAULT_TENANT_ID }}"
+            - name: AZURE_KEYVAULT_CLIENT_ID
+              value: "{{ .Values.env.AZURE_KEYVAULT_CLIENT_ID }}"
+            - name: AZURE_KEYVAULT_CLIENT_SECRET
+              value: "{{ .Values.env.AZURE_KEYVAULT_CLIENT_SECRET }}"
+            - name: APM_ENABLE
+              value: "{{ .Values.env.APM_ENABLE }}"
+            - name: NEW_RELIC_APP_NAME
+              value: "{{ .Values.env.NEW_RELIC_APP_NAME }}"
+            - name: NEW_RELIC_LICENSE_KEY
+              value: "{{ .Values.env.NEW_RELIC_LICENSE_KEY }}"
