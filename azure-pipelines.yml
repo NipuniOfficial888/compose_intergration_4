@@ -13,7 +13,7 @@ variables:
   dockerfilePath: '**/Dockerfile'
   tag: '$(Build.BuildId)'
   helmChartPath: 'charts/compose-integration'
-  pool: 'Local-Windows-Agent'
+  pool: 'Azure Pipelines'
   namespace: 'compose'
 
 stages:
