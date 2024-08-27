@@ -9,12 +9,12 @@ resources:
 
 variables:
   dockerRegistryServiceConnection: 'DockerHubServiceConnection'
-  imageRepository: 'nipuniofficial/repo_1' 
-  dockerfilePath: '**/Dockerfile' 
-  tag: '$(Build.BuildId)'  
-  helmChartPath: 'charts/compose-integration'  
-  pool: 'Local-Windows-Agent' 
-  namespace: 'compose'  
+  imageRepository: 'nipuniofficial/repo_1'
+  dockerfilePath: '**/Dockerfile'
+  tag: '$(Build.BuildId)'
+  helmChartPath: 'charts/compose-integration'
+  pool: 'Local-Windows-Agent'
+  namespace: 'compose'
 
 stages:
   - stage: Build
@@ -24,13 +24,13 @@ stages:
         displayName: Build
         pool: $(pool)
         steps:
-  - script: |
-    set JAVA_HOME=C:\Program Files\Java\jdk-17
-    set PATH=%JAVA_HOME%\bin;%PATH%
-    java -version
-  displayName: Set Java 17 as the default version
+          - script: |
+              set JAVA_HOME=C:\Program Files\Java\jdk-17
+              set PATH=%JAVA_HOME%\bin;%PATH%
+              java -version
+            displayName: Set Java 17 as the default version
 
-  - task: Gradle@3
+          - task: Gradle@3
             inputs:
               gradleWrapperFile: 'gradlew'
               options: 'bootjar'
@@ -38,13 +38,11 @@ stages:
               publishJUnitResults: true
               testResultsFiles: '**/TEST-*.xml'
               javaHomeOption: 'Path'
-              jdkUserInputPath: 'C:\Program Files\Java\jdk-17' 
+              jdkUserInputPath: 'C:\Program Files\Java\jdk-17'
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
 
-
-
-  - task: Docker@2 
+          - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
               command: buildAndPush
@@ -54,15 +52,9 @@ stages:
               tags: |
                 $(tag)
 
-
-//Ignoring the sonar analysis step
-
-
- - task: PublishBuildArtifacts@1
+          - task: PublishBuildArtifacts@1
             displayName: Publish Helm chart as artifact
             inputs:
               PathtoPublish: '$(helmChartPath)'
               ArtifactName: 'helm-chart'
               publishLocation: 'Container'
-
-
