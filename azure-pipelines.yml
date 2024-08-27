@@ -28,9 +28,11 @@ stages:
           # Increase Git buffer size
           - script: |
               git config --global http.postBuffer 1048576000
-            displayName: Increase Git buffer size
+              git config --global core.fscache true
+              git config --global gc.auto 0
+            displayName: Increase Git buffer size and adjust settings
 
-          # Perform shallow fetch
+          # Perform shallow fetch with retries
           - checkout: self
             fetchDepth: 1
 
