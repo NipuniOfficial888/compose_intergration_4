@@ -24,12 +24,19 @@ stages:
         displayName: Build
         pool: $(pool)
         steps:
+          # Increase Git buffer size to prevent RPC errors
           - script: |
-              set JAVA_HOME=C:\Program Files\Java\jdk-17
+              git config --global http.postBuffer 524288000
+            displayName: Increase Git buffer size
+
+          # Set Java version
+          - script: |
+              set JAVA_HOME="C:\Program Files\Java\jdk-17"
               set PATH=%JAVA_HOME%\bin;%PATH%
               java -version
             displayName: Set Java 17 as the default version
 
+          # Build with Gradle
           - task: Gradle@3
             inputs:
               gradleWrapperFile: 'gradlew'
@@ -42,6 +49,7 @@ stages:
               sonarQubeRunAnalysis: false
               spotBugsAnalysis: false
 
+          # Build and push Docker image
           - task: Docker@2
             displayName: Build and push an image to container registry
             inputs:
@@ -52,6 +60,7 @@ stages:
               tags: |
                 $(tag)
 
+          # Publish Helm chart as artifact
           - task: PublishBuildArtifacts@1
             displayName: Publish Helm chart as artifact
             inputs:
